@@ -22,6 +22,8 @@ protected:
 	virtual void BeginPlay() override;
 
 	void OpenDoor();
+
+	void CloseDoor();
 	
 
 public:
@@ -37,4 +39,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	AActor* ActorThatOpens;
+
+	AActor* Owner;
+
+	float LastTimeOpen;
+	float OpenDoorDelay = 0.5f;
 };
