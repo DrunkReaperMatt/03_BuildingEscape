@@ -21,6 +21,16 @@ void UGrabber::BeginPlay()
 	Super::BeginPlay();
 
 	UE_LOG(LogTemp, Warning, TEXT("Grabber ready for duty!!"));
+
+	// Look for attached Physics Handle
+	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	if (PhysicsHandle) {
+		// Physics handle is found
+	}
+	else {
+		UE_LOG(LogTemp, Error, TEXT("Physics Handler not found in %s."), GetOwner()->GetName());
+
+	}
 }
 
 
@@ -33,7 +43,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	FVector PlayerLocation;
 	FRotator PlayerRotation;
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerLocation, OUT PlayerRotation);
-	
+
 	/// Raycast out to reach distance
 	FVector LineTraceEnd = PlayerLocation + PlayerRotation.Vector() * Reach;
 
@@ -48,7 +58,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 		0,
 		10.f
 	);
-	
+
 	/// Setup query parameters
 	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
 
