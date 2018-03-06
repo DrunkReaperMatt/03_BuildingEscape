@@ -37,11 +37,9 @@ private:
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* PressurePlate;
 
-	UPROPERTY(VisibleAnywhere)
-	AActor* ActorThatOpens;
-
 	AActor* Owner;
-
 	float LastTimeOpen;
 	float OpenDoorDelay = 0.5f;
+
+	float GetTotalMassOnPlate();
 };
