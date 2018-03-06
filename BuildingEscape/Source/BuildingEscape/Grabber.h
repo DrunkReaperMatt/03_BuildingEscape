@@ -15,7 +15,7 @@ class BUILDINGESCAPE_API UGrabber : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UGrabber();
 
@@ -23,14 +23,16 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
-	float Reach = 100.f;	
+	float Reach = 100.f;
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;
 	UInputComponent* InputController = nullptr;
 
 	void Grab();
+	void Release();
+
 };

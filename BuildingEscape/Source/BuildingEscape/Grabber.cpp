@@ -38,6 +38,7 @@ void UGrabber::BeginPlay()
 
 		/// Bind the input axis
 		InputController->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
+		InputController->BindAction("Grab", IE_Released, this, &UGrabber::Release);
 	}
 	else {
 		UE_LOG(LogTemp, Error, TEXT("Input Component not found in %s"), *GetOwner()->GetName());
@@ -92,7 +93,11 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 
 void UGrabber::Grab()
 {
-
 	UE_LOG(LogTemp, Warning, TEXT("Grab Pressed"));
+}
+
+void UGrabber::Release()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Grab Released"));
 }
 
