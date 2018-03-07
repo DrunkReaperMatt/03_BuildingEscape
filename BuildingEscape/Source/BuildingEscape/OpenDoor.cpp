@@ -20,6 +20,7 @@ void UOpenDoor::BeginPlay()
 	Super::BeginPlay();
 
 	Owner = GetOwner();
+	if (!PressurePlate) { UE_LOG(LogTemp, Error, TEXT("%s missing Trigger Volume."), *GetOwner()->GetName()); }
 
 	CloseDoor();
 }
@@ -45,6 +46,8 @@ void UOpenDoor::CloseDoor() { Owner->SetActorRotation(FRotator().ZeroRotator); }
 
 float UOpenDoor::GetTotalMassOnPlate()
 {
+	if (!PressurePlate) { return 0.f; }
+
 	float TotalMass = 0.f;
 
 	// Find all overlapping actors

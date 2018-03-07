@@ -40,6 +40,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	
+	if (!PhysicsHandle) { return; }
 	// if the physics handle is attached
 	if (PhysicsHandle->GrabbedComponent) {
 		// move object
@@ -57,6 +58,7 @@ void UGrabber::Grab()
 	/// If we hit something then attach a physics handle
 	if (ActorHit) {
 		// attach physics handle
+		if (!PhysicsHandle) { return; }
 		PhysicsHandle->GrabComponent(
 			ComponentToGrab,
 			NAME_None,
@@ -69,6 +71,7 @@ void UGrabber::Grab()
 void UGrabber::Release()
 {
 	// release physics handle
+	if (!PhysicsHandle) { return; }
 	PhysicsHandle->ReleaseComponent();
 }
 
@@ -113,7 +116,6 @@ const FVector UGrabber::GetReachLineEnd()
 void UGrabber::FindPhysicsComponent()
 {
 	// Look for attached Physics Handle
-	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
-	
+	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();	
 	if (!PhysicsHandle) { UE_LOG(LogTemp, Error, TEXT("Physics Handler not found in %s."), *GetOwner()->GetName()); }
 }
