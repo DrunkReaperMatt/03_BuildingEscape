@@ -21,8 +21,6 @@ void UOpenDoor::BeginPlay()
 
 	Owner = GetOwner();
 	if (!PressurePlate) { UE_LOG(LogTemp, Error, TEXT("%s missing Trigger Volume."), *GetOwner()->GetName()); }
-
-	CloseDoor();
 }
 
 // Called every frame
@@ -30,22 +28,9 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (GetTotalMassOnPlate() >= 50.f) {
-		OpenDoor();
-		LastTimeOpen = GetWorld()->GetTimeSeconds();
-	}
-
-	if (GetWorld()->GetTimeSeconds() - LastTimeOpen > OpenDoorDelay) {
-		CloseDoor();
-	}
+	if (GetTotalMassOnPlate() >= TriggerMass) { OnOpen.Broadcast(); }
+	else { OnClose.Broadcast(); }
 }
-
-void UOpenDoor::OpenDoor() { 
-	// Owner->SetActorRotation(FRotator(0.f, OpenAngle, 0.f)); 
-	OnOpenRequest.Broadcast();
-}
-
-void UOpenDoor::CloseDoor() { Owner->SetActorRotation(FRotator().ZeroRotator); }
 
 float UOpenDoor::GetTotalMassOnPlate()
 {
